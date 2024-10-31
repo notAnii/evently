@@ -83,6 +83,7 @@ const Dropdown = ({ value, placeHolder, onChangeHandler }: DropdownProps) => {
                   placeholder="Category name"
                   className="input-field mt-3"
                   onChange={(e) => setNewCategory(e.target.value)}
+                  onClick={(e) => e.stopPropagation()}
                 />
               </AlertDialogDescription>
             </AlertDialogHeader>
