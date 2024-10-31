@@ -145,7 +145,6 @@ const EventForm = ({ userId, type, event, eventId }: EventFormProps) => {
                   <Dropdown
                     onChangeHandler={field.onChange}
                     value={field.value}
-                    placeHolder="Category"
                   />
                 </FormControl>
                 <FormMessage />

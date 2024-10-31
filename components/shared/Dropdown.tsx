@@ -5,7 +5,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { ICatergory } from "@/lib/database/models/category.model";
 import { startTransition, useEffect, useState } from "react";
 import {
   AlertDialog,
@@ -23,15 +22,15 @@ import {
   createCategory,
   getAllcategories,
 } from "@/lib/actions/category.actions";
+import { ICategory } from "@/lib/database/models/category.model";
 
 type DropdownProps = {
-  placeHolder?: string;
   value?: string;
   onChangeHandler?: () => void;
 };
 
-const Dropdown = ({ value, placeHolder, onChangeHandler }: DropdownProps) => {
-  const [categories, setCategories] = useState<ICatergory[]>([]);
+const Dropdown = ({ value, onChangeHandler }: DropdownProps) => {
+  const [categories, setCategories] = useState<ICategory[]>([]);
   const [newCategory, setNewCategory] = useState("");
 
   const handleAddCategory = () => {
@@ -45,7 +44,8 @@ const Dropdown = ({ value, placeHolder, onChangeHandler }: DropdownProps) => {
   useEffect(() => {
     const getCategories = async () => {
       const categoryList = await getAllcategories();
-      categoryList && setCategories(categoryList as ICatergory[]);
+
+      categoryList && setCategories(categoryList as ICategory[]);
     };
 
     getCategories();
@@ -54,7 +54,7 @@ const Dropdown = ({ value, placeHolder, onChangeHandler }: DropdownProps) => {
   return (
     <Select onValueChange={onChangeHandler} defaultValue={value}>
       <SelectTrigger className="select-field">
-        <SelectValue placeholder={placeHolder} />
+        <SelectValue placeholder="Category" />
       </SelectTrigger>
       <SelectContent>
         {categories.length > 0 &&
@@ -67,11 +67,9 @@ const Dropdown = ({ value, placeHolder, onChangeHandler }: DropdownProps) => {
               {category.name}
             </SelectItem>
           ))}
+
         <AlertDialog>
-          <AlertDialogTrigger
-            className="p-medium-14 flex w-full rounded-sm py-3 pl-8
-            text-primary-500 hover:bg-primary-50 focus:text-primary-500"
-          >
+          <AlertDialogTrigger className="p-medium-14 flex w-full rounded-sm py-3 pl-8 text-primary-500 hover:bg-primary-50 focus:text-primary-500">
             Add new category
           </AlertDialogTrigger>
           <AlertDialogContent className="bg-white">
@@ -83,7 +81,6 @@ const Dropdown = ({ value, placeHolder, onChangeHandler }: DropdownProps) => {
                   placeholder="Category name"
                   className="input-field mt-3"
                   onChange={(e) => setNewCategory(e.target.value)}
-                  onClick={(e) => e.stopPropagation()}
                 />
               </AlertDialogDescription>
             </AlertDialogHeader>

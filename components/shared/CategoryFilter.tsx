@@ -7,7 +7,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { getAllcategories } from "@/lib/actions/category.actions";
-import { ICatergory } from "@/lib/database/models/category.model";
+import { ICategory } from "@/lib/database/models/category.model";
 import { formUrlQuery, removeKeysFromQuery } from "@/lib/utils";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -15,14 +15,14 @@ import { useEffect, useState } from "react";
 type Props = {};
 
 const CategoryFilter = (props: Props) => {
-  const [categories, setCategories] = useState<ICatergory[]>([]);
+  const [categories, setCategories] = useState<ICategory[]>([]);
   const router = useRouter();
   const searchParams = useSearchParams();
 
   useEffect(() => {
     const getCategories = async () => {
       const categoryList = await getAllcategories();
-      categoryList && setCategories(categoryList as ICatergory[]);
+      categoryList && setCategories(categoryList as ICategory[]);
     };
 
     getCategories();
