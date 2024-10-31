@@ -5,7 +5,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { startTransition, useEffect, useState } from "react";
+import { startTransition, useEffect, useRef, useState } from "react";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -32,6 +32,7 @@ type DropdownProps = {
 const Dropdown = ({ value, onChangeHandler }: DropdownProps) => {
   const [categories, setCategories] = useState<ICategory[]>([]);
   const [newCategory, setNewCategory] = useState("");
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const handleAddCategory = () => {
     createCategory({
@@ -49,6 +50,12 @@ const Dropdown = ({ value, onChangeHandler }: DropdownProps) => {
     };
 
     getCategories();
+  }, []);
+
+  useEffect(() => {
+    if (inputRef.current) {
+      inputRef.current.focus();
+    }
   }, []);
 
   return (
@@ -77,6 +84,7 @@ const Dropdown = ({ value, onChangeHandler }: DropdownProps) => {
               <AlertDialogTitle>New Category</AlertDialogTitle>
               <AlertDialogDescription>
                 <Input
+                  ref={inputRef}
                   type="text"
                   placeholder="Category name"
                   className="input-field mt-3"
